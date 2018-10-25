@@ -29,103 +29,29 @@ genes <- read_tsv('genes.tsv', col_names = c('gene', 'disorder', 'inheritance'))
 
 ##Specify info_columns
 
-types <- c(AC= 'i',
-  AF= 'n',
-  AN= 'i',
-  BaseQRankSum= 'n',
-  ClippingRankSum= 'n',
-  DB= 'n',
-  DP= 'n',
-  DS= 'n',
-  END= 'i',
-  ExcessHet= 'n',
-  FS= 'n',
-  HaplotypeScore= 'n',
-  InbreedingCoeff= 'n',
-  MLEAC= 'n',
-  MLEAF= 'n',
-  MQ= 'n',
-  MQRankSum= 'n',
-  QD= 'n',
-  RAW_MQ= 'n',
-  ReadPosRankSum= 'n',
-  SOR= 'n',
-  gnomAD_genome_ALL= 'n',
-  gnomAD_genome_AFR= 'n',
-  gnomAD_genome_AMR= 'n',
-  gnomAD_genome_ASJ= 'n',
-  gnomAD_genome_EAS= 'n',
-  gnomAD_genome_FIN= 'n',
-  gnomAD_genome_NFE= 'n',
-  gnomAD_genome_OTH= 'n',
-  gnomAD_exome_ALL= 'n',
-  gnomAD_exome_AFR= 'n',
-  gnomAD_exome_AMR= 'n',
-  gnomAD_exome_ASJ= 'n',
-  gnomAD_exome_EAS= 'n',
-  gnomAD_exome_FIN= 'n',
-  gnomAD_exome_NFE= 'n',
-  gnomAD_exome_OTH= 'n',
-  gnomAD_exome_SAS= 'n',
-  ExAC_ALL= 'n',
-  ExAC_AFR= 'n',
-  ExAC_AMR= 'n',
-  ExAC_EAS= 'n',
-  ExAC_FIN= 'n',
-  ExAC_NFE= 'n',
-  ExAC_OTH= 'n',
-  ExAC_SAS= 'n',
-  SIFT_score= 'n',
-  SIFT_converted_rankscore= 'n',
-  Polyphen2_HDIV_score= 'n',
-  Polyphen2_HDIV_rankscore= 'n',
-  Polyphen2_HVAR_score= 'n',
-  Polyphen2_HVAR_rankscore= 'n',
-  LRT_score= 'n',
-  LRT_converted_rankscore= 'n',
-  MutationTaster_score= 'n',
-  MutationTaster_converted_rankscore= 'n',
-  MutationAssessor_score= 'n',
-  MutationAssessor_score_rankscore= 'n',
-  FATHMM_score= 'n',
-  FATHMM_converted_rankscore= 'n',
-  PROVEAN_score= 'n',
-  PROVEAN_converted_rankscore= 'n',
-  VEST3_score= 'n',
-  VEST3_rankscore= 'n',
-  MetaSVM_score= 'n',
-  MetaSVM_rankscore= 'n',
-  MetaLR_score= 'n',
-  MetaLR_rankscore= 'n',
-  'M-CAP_score'= 'n',
-  'M-CAP_rankscore'= 'n',
-  CADD_raw= 'n',
-  CADD_raw_rankscore= 'n',
-  CADD_phred= 'n',
-  DANN_score= 'n',
-  DANN_rankscore= 'n',
-  'fathmm-MKL_coding_score'= 'n',
-  'fathmm-MKL_coding_rankscore'= 'n',
-  Eigen_coding_or_noncoding= 'n',
-  'Eigen-raw'= 'n',
-  'Eigen-PC-raw'= 'n',
-  GenoCanyon_score= 'n',
-  GenoCanyon_score_rankscore= 'n',
-  integrated_fitCons_score= 'n',
-  integrated_fitCons_score_rankscore= 'n',
-  integrated_confidence_value= 'n',
-  'GERP++_RS'= 'n',
-  'GERP++_RS_rankscore'= 'n',
-  phyloP100way_vertebrate= 'n',
-  phyloP100way_vertebrate_rankscore= 'n',
-  phyloP20way_mammalian= 'n',
-  phyloP20way_mammalian_rankscore= 'n',
-  phastCons100way_vertebrate= 'n',
-  phastCons100way_vertebrate_rankscore= 'n',
-  phastCons20way_mammalian= 'n',
-  phastCons20way_mammalian_rankscore= 'n',
-  SiPhy_29way_logOdds= 'n',
-  SiPhy_29way_logOdds_rankscore= 'n')
+types <- c(AC= 'i', AF= 'n', AN= 'i', BaseQRankSum= 'n', ClippingRankSum= 'n', DB= 'n', DP= 'n', 
+           DS= 'n', END= 'i', ExcessHet= 'n', FS= 'n', HaplotypeScore= 'n', InbreedingCoeff= 'n', 
+           MLEAC= 'n', MLEAF= 'n', MQ= 'n', MQRankSum= 'n', QD= 'n', RAW_MQ= 'n', ReadPosRankSum= 'n', 
+           SOR= 'n', gnomAD_genome_ALL= 'n', gnomAD_genome_AFR= 'n', gnomAD_genome_AMR= 'n', 
+           gnomAD_genome_ASJ= 'n', gnomAD_genome_EAS= 'n', gnomAD_genome_FIN= 'n', gnomAD_genome_NFE= 'n', 
+           gnomAD_genome_OTH= 'n', gnomAD_exome_ALL= 'n', gnomAD_exome_AFR= 'n', gnomAD_exome_AMR= 'n', 
+           gnomAD_exome_ASJ= 'n', gnomAD_exome_EAS= 'n', gnomAD_exome_FIN= 'n', gnomAD_exome_NFE= 'n', 
+           gnomAD_exome_OTH= 'n', gnomAD_exome_SAS= 'n', ExAC_ALL= 'n', ExAC_AFR= 'n', ExAC_AMR= 'n', 
+           ExAC_EAS= 'n', ExAC_FIN= 'n', ExAC_NFE= 'n', ExAC_OTH= 'n', ExAC_SAS= 'n', SIFT_score= 'n', 
+           SIFT_converted_rankscore= 'n', Polyphen2_HDIV_score= 'n', Polyphen2_HDIV_rankscore= 'n', 
+           Polyphen2_HVAR_score= 'n', Polyphen2_HVAR_rankscore= 'n', LRT_score= 'n', LRT_converted_rankscore= 'n', 
+           MutationTaster_score= 'n', MutationTaster_converted_rankscore= 'n', MutationAssessor_score= 'n', 
+           MutationAssessor_score_rankscore= 'n', FATHMM_score= 'n', FATHMM_converted_rankscore= 'n', 
+           PROVEAN_score= 'n', PROVEAN_converted_rankscore= 'n', VEST3_score= 'n', VEST3_rankscore= 'n', 
+           MetaSVM_score= 'n', MetaSVM_rankscore= 'n', MetaLR_score= 'n', MetaLR_rankscore= 'n', 
+           'M-CAP_score'= 'n', 'M-CAP_rankscore'= 'n', CADD_raw= 'n', CADD_raw_rankscore= 'n', CADD_phred= 'n', 
+           DANN_score= 'n', DANN_rankscore= 'n', 'fathmm-MKL_coding_score'= 'n', 'fathmm-MKL_coding_rankscore'= 'n', 
+           Eigen_coding_or_noncoding= 'n', 'Eigen-raw'= 'n', 'Eigen-PC-raw'= 'n', GenoCanyon_score= 'n', 
+           GenoCanyon_score_rankscore= 'n', integrated_fitCons_score= 'n', integrated_fitCons_score_rankscore= 'n', 
+           integrated_confidence_value= 'n', 'GERP++_RS'= 'n', 'GERP++_RS_rankscore'= 'n', phyloP100way_vertebrate= 'n', 
+           phyloP100way_vertebrate_rankscore= 'n', phyloP20way_mammalian= 'n', phyloP20way_mammalian_rankscore= 'n', 
+           phastCons100way_vertebrate= 'n', phastCons100way_vertebrate_rankscore= 'n', phastCons20way_mammalian= 'n', 
+           phastCons20way_mammalian_rankscore= 'n', SiPhy_29way_logOdds= 'n', SiPhy_29way_logOdds_rankscore= 'n')
 
 # VcfR format to tidy dataframes
 
@@ -208,7 +134,7 @@ ad_summary  <- ad_pat %>% group_by(Indiv, Gene.refGene, Classification) %>%
 var_counts <- gts_add %>% group_by(Indiv, Gene.refGene, Classification) %>%
   summarise(var_count = sum(vars)) %>% filter(var_count != 0)
 
-write_tsv(var_counts, 'JainF_2511_var_counts.tsv')
+#write_tsv(var_counts, 'JainF_2511_var_counts.tsv')
 
 # make data frame containing all samples and all genes 2511 x 34
 
@@ -247,6 +173,23 @@ all_samples_genes <- all_samples_genes %>% mutate(Legend = case_when(
   (pathogenic_vars >= 2) ~ 'BI_PATH'
 ))
 
+AR_genes <- genes %>% filter(inheritance == 'AR')
+
+all_samples_ARgenes <- semi_join(all_samples_genes, AR_genes)
+
+all_samples_ARgenes$gene <- factor(all_samples_ARgenes$gene, levels= rev(c("CAPN3", "DYSF", "SGCG",  "SGCA",  "SGCB",  "SGCD", "TCAP", "TRIM32", 
+                                                                           "FKRP", "TTN", "POMT1", "ANO5",  "FKTN",  "POMT2", "POMGNT1", "DAG1", "PLEC", "ISPD", "GAA", "GNE"))) 
+
+
+
+path_vus_summary <- all_samples_ARgenes %>% group_by(gene) %>% summarise(path_vus_sum = sum(pathogenic_vars, na.rm=TRUE) + sum(vus_vars, na.rm=TRUE), 
+                                                                         path_sum = sum(pathogenic_vars, na.rm=TRUE), 
+                                                                         vus_sum = sum(vus_vars, na.rm=TRUE) ) %>% arrange(desc(path_vus_sum))
+all_samples_ARgenes$gene2 <- factor(all_samples_ARgenes$gene, levels= rev(as.character(path_vus_summary$gene))) 
+
+
+
+
 # Plot
 
 p <- ggplot(all_samples_genes, aes(gene, sample_id)) + geom_tile(aes(fill = Legend,width=0.9,height=0.9),colour = "grey95")
@@ -254,3 +197,9 @@ p <- p + scale_x_discrete("") + scale_y_discrete("Jain Foundation Cohort, n = 25
 p <- p + scale_fill_manual(values=c("BI_VUS" = rgb(0,0,1,alpha=1.0),"VUS" = rgb(0,0,1,alpha=0.2), "NONE" = "white","BI_PATH" = "red","VUS_PATH" = "purple","PATH" = rgb(1,0,0,alpha=0.2)))
 p <- p + theme(axis.text.y=element_blank(), axis.text.x = element_text(angle = 90, hjust = 1))
 p
+
+r <- ggplot(all_samples_ARgenes, aes(sample_id, gene2)) + geom_tile(aes(fill = Legend,width=0.9,height=0.9),colour = "grey100", size = 0.001)
+r <- r + scale_y_discrete("") + scale_x_discrete("Jain Foundation Cohort, n = 2511")
+r <- r + scale_fill_manual(values=c("BI_VUS" = rgb(0,0,1,alpha=1.0),"VUS" = rgb(0,0,1,alpha=0.2), "NONE" = "white","BI_PATH" = "red","VUS_PATH" = "purple","PATH" = "orange"))
+r <- r + theme(axis.text.x=element_blank())
+r
