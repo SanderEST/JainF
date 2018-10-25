@@ -10,8 +10,12 @@
 # 
 # Annovar to annotate
 # > perl ~/data_tools/annovar/table_annovar.pl ${wd}${prefix}.normalized.vcf ~/data_tools/annovar/humandb/ \
-# > -buildver hg19 -out ${wd}${family} -remove -protocol refGene,gnomad_genome,gnomad_exome,exac03,dbnsfp33a,clinvar_20180603 \
+# > -buildver hg19 -out ${wd}${prefix} -remove -protocol refGene,gnomad_genome,gnomad_exome,exac03,dbnsfp33a,clinvar_20180603 \
 # > -operation g,f,f,f,f,f -arg '-hgvs,,,,,,' -nastring . -otherinfo -vcfinput
+#
+# Compress 
+# bgzip JainF_2511.hg19_multianno.vcf
+# tabix JainF_2511.hg19_multianno.vcf.gz
 
 
 # Load libraries
@@ -20,7 +24,7 @@ library(vcfR)
 
 #Read input
 
-vcf <- read.vcfR("JainF_2511.hg19_multianno.vcf", verbose = FALSE )
+vcf <- read.vcfR("JainF_2511.hg19_multianno.vcf.gz", verbose = FALSE )
 genes <- read_tsv('genes.tsv', col_names = c('gene', 'disorder', 'inheritance'))
 
 ##Specify info_columns
