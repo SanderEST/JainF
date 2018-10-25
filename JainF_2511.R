@@ -205,3 +205,48 @@ var_counts <- gts_add %>% group_by(Indiv, Gene.refGene, Classification) %>%
   summarise(var_count = sum(vars)) %>% filter(var_count != 0)
 
 write_tsv(var_counts, 'JainF_2511_var_counts.tsv')
+
+# make data frame containing all samples and all genes 2511 x 34
+
+samples <- unique(gts$Indiv)
+gene_list <- unlist(genes['gene'])
+
+gene <- rep(gene_list, length(samples))
+sample_id <- rep(samples, each = length(gene_list))
+
+all_samples_genes <- data_frame(sample_id,gene)
+
+# Prepare path_var and vus_var counts
+path_vars <- gts_add %>% group_by(Indiv, Gene.refGene, Classification) %>% 
+  summarise(var_count = sum(vars)) %>% 
+  filter(Classification %in% c('Likely pathogenic', 'Pathogenic')) %>% 
+  group_by(Indiv, Gene.refGene) %>% 
+  summarise(pathogenic_vars = sum(var_count))
+
+vus_vars <- gts_add %>% group_by(Indiv, Gene.refGene, Classification) %>% 
+  summarise(vus_vars = sum(vars)) %>% 
+  filter(Classification %in% c('VUS')) %>%
+  select(-Classification)
+
+# Join the counts
+
+all_samples_genes <- full_join(all_samples_genes, path_vars, by= c("sample_id" = "Indiv", "gene" = "Gene.refGene")) %>% full_join(vus_vars, by= c("sample_id" = "Indiv", "gene" = "Gene.refGene"))
+
+# Add the legend
+
+all_samples_genes <- all_samples_genes %>% mutate(Legend = case_when(
+  (pathogenic_vars == 0 | is.na(pathogenic_vars)) & (vus_vars == 0 | is.na(vus_vars)) ~ 'NONE',
+  (pathogenic_vars == 0 | is.na(pathogenic_vars)) & (vus_vars == 1 ) ~ 'VUS',
+  (pathogenic_vars == 0 | is.na(pathogenic_vars)) & (vus_vars >= 2 ) ~ 'BI_VUS',
+  (pathogenic_vars == 1) & (vus_vars == 0 | is.na(pathogenic_vars)) ~ 'PATH',
+  (pathogenic_vars == 1) & (vus_vars >= 1 ) ~ 'VUS_PATH',
+  (pathogenic_vars >= 2) ~ 'BI_PATH'
+))
+
+# Plot
+
+p <- ggplot(all_samples_genes, aes(gene, sample_id)) + geom_tile(aes(fill = Legend,width=0.9,height=0.9),colour = "grey95")
+p <- p + scale_x_discrete("") + scale_y_discrete("Jain Foundation Cohort, n = 2511")
+p <- p + scale_fill_manual(values=c("BI_VUS" = rgb(0,0,1,alpha=1.0),"VUS" = rgb(0,0,1,alpha=0.2), "NONE" = "white","BI_PATH" = "red","VUS_PATH" = "purple","PATH" = rgb(1,0,0,alpha=0.2)))
+p <- p + theme(axis.text.y=element_blank(), axis.text.x = element_text(angle = 90, hjust = 1))
+p
